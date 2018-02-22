@@ -4,39 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent">
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.example.adrian.popularmovies_stage2.fragment.DetailsActivityFragment"
-        tools:showIn="@layout/activity_details">
+        tools:context="com.example.adrian.constraintlayout.MainActivity">
 
         <ImageView
             android:id="@+id/iv_backdrop"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="152dp"
             android:contentDescription="@string/header_description"
-            app:layout_constraintDimensionRatio="16:9"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/header" />
+            app:srcCompat="@drawable/header" />
 
         <ImageView
             android:id="@+id/iv_poster"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:contentDescription="@string/poster_image"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_backdrop"
+            app:layout_constraintBottom_toTopOf="@+id/barrier"
             app:layout_constraintDimensionRatio="w,2:3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_backdrop"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/poster" />
 
         <TextView
@@ -45,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/movie_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintEnd_toStartOf="@+id/btn_bookmark"
             app:layout_constraintStart_toEndOf="@+id/iv_poster"
@@ -60,7 +58,7 @@
             android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="@string/bookmark_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_release_date"
+            app:layout_constraintBottom_toTopOf="@+id/barrier"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/iv_backdrop"
             app:srcCompat="@drawable/ic_bookmark" />
@@ -75,7 +73,7 @@
         <TextView
             android:id="@+id/tv_release_date"
             android:layout_width="0dp"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@string/pg_rating"
@@ -106,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/button_buy"
             android:drawableStart="@drawable/ic_play_arrow"
             android:drawableLeft="@drawable/ic_play_arrow"
@@ -118,7 +116,6 @@
             android:id="@+id/line1"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            android:layout_marginTop="8dp"
             android:background="@android:color/darker_gray"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -184,7 +181,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            tools:text="@string/tv_rating"
+            android:text="@string/tv_rating"
             app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
             app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
             app:layout_constraintTop_toBottomOf="@+id/floatingActionButton" />
@@ -239,13 +236,14 @@
             android:id="@+id/tv_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="8dp"
-            tools:text="@string/movie_desc"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/movie_desc"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/line2" />
+
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

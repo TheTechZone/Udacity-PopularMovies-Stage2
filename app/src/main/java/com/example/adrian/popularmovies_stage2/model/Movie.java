@@ -1,5 +1,8 @@
 package com.example.adrian.popularmovies_stage2.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.example.adrian.popularmovies_stage2.rest.NetworkUtils;
@@ -135,6 +138,10 @@ public class Movie {
 
     public String getBackdropPath() {
         return backdropPath;
+    }
+
+    public String getBackdropUrl(){
+        return NetworkUtils.buildPosterUrl(backdropPath);
     }
 
     public void setBackdropPath(String backdropPath) {

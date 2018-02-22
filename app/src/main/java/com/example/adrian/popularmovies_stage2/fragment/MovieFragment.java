@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.example.adrian.popularmovies_stage2.R;
 import com.example.adrian.popularmovies_stage2.activity.DetailsActivity;
-import com.example.adrian.popularmovies_stage2.activity.DetailsActivityFragment;
 import com.example.adrian.popularmovies_stage2.adapter.MoviesAdapter;
 import com.example.adrian.popularmovies_stage2.model.Movie;
 import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
@@ -40,14 +39,16 @@ public abstract class MovieFragment extends Fragment {
         mAdapter = new MoviesAdapter(container.getContext(), new ArrayList<Movie>(0), new MoviesAdapter.MovieItemListener() {
             @Override
             public void onMovieClick(Movie movie) {
+                Toast.makeText(container.getContext(), movie.getReleaseDate() + " /", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), DetailsActivity.class)
                         .putExtra("title", movie.getTitle())
                         .putExtra("poster", movie.getPosterUrl())
+                        .putExtra("cover", movie.getBackdropUrl())
                         .putExtra("synopsis", movie.getOverview())
-                        .putExtra("userRating", movie.getVoteAverage())
+                        .putExtra("rating", movie.getVoteAverage())
+                        .putExtra("adult", movie.getAdult())
                         .putExtra("releaseDate", movie.getReleaseDate());
                 startActivity(intent);
-                Toast.makeText(container.getContext(), "Movie desc: " + movie.getOverview() , Toast.LENGTH_LONG).show();
             }
 //            @Override
 //            public void onMovieClick(long id) {
