@@ -39,8 +39,9 @@ public abstract class MovieFragment extends Fragment {
         mAdapter = new MoviesAdapter(container.getContext(), new ArrayList<Movie>(0), new MoviesAdapter.MovieItemListener() {
             @Override
             public void onMovieClick(Movie movie) {
-                Toast.makeText(container.getContext(), movie.getReleaseDate() + " /", Toast.LENGTH_LONG).show();
+//                Toast.makeText(container.getContext(), movie.getPopularity() + " /", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), DetailsActivity.class)
+                        .putExtra("id", movie.getId())
                         .putExtra("title", movie.getTitle())
                         .putExtra("poster", movie.getPosterUrl())
                         .putExtra("cover", movie.getBackdropUrl())

@@ -1,20 +1,20 @@
 package com.example.adrian.popularmovies_stage2.fragment;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adrian.popularmovies_stage2.R;
+import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -23,10 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Created by adrian on 22.02.2018.
  */
-public class DetailsActivityFragment extends Fragment {
 
+public class DetailsFragment extends Fragment {
+
+    public int movieId;
     public ImageView backdropImageView;
     public ImageView posterImageView;
     public TextView movieTitleTextView;
@@ -35,26 +37,8 @@ public class DetailsActivityFragment extends Fragment {
     public TextView ratingTextView;
     public TextView familyTextView;
     public ImageButton bookmarkImageButton;
-
-    public DetailsActivityFragment() {
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_details, container, false);
-        findViews(view);
-
-        bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Bookmarked", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-        parseIntent();
-
-        return view;
-    }
+    public Button trailerDialogButton;
+    protected MovieApiService mService;
 
     public void findViews(View view){
         backdropImageView = view.findViewById(R.id.iv_backdrop);
@@ -65,6 +49,7 @@ public class DetailsActivityFragment extends Fragment {
         ratingTextView = view.findViewById(R.id.tv_rating_percent);
         familyTextView = view.findViewById(R.id.tv_family);
         bookmarkImageButton = view.findViewById(R.id.btn_bookmark);
+        trailerDialogButton = view.findViewById(R.id.btn_trailer_dialog);
     }
 
     public void parseIntent(){
@@ -88,7 +73,7 @@ public class DetailsActivityFragment extends Fragment {
         releaseDateTextView.setText("Released: " + getFormattedData(releaseDate));
         descriptionTextView.setText(synopsis);
         if(adult){
-           familyTextView.setText("Adult movie");
+            familyTextView.setText("Adult movie");
         }else {
             familyTextView.setText("Family movie");
         }
@@ -109,5 +94,14 @@ public class DetailsActivityFragment extends Fragment {
         }
 
         return DateFormat.getDateInstance(DateFormat.LONG).format(date);
+    }
+
+    public void setBookmarkButton(){
+        bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Bookmarked", Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 }

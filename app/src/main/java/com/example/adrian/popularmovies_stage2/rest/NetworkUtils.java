@@ -10,6 +10,7 @@ public class NetworkUtils {
     private static final String SCHEME = "https";
     private static final String BASE_API_URL = "api.themoviedb.org";
     private static final String BASE_IMAGE_URL = "image.tmdb.org";
+    private static final String BASE_TRAILER_URL = "www.youtube.com";
     private static final String IMAGE_SIZE = "w500";
     private static final String API_VERSION = "3";
 
@@ -32,6 +33,15 @@ public class NetworkUtils {
                 .appendPath("p")
                 .appendPath(IMAGE_SIZE)
                 .appendPath(posterQuery);
+        return builder.build().toString();
+    }
+
+    public static String buildTrailerUrl(String videoKey){
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme(SCHEME)
+                .authority(BASE_TRAILER_URL)
+                .appendPath("watch")
+                .appendQueryParameter("v", videoKey);
         return builder.build().toString();
     }
 }
