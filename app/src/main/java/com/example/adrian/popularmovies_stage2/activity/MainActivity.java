@@ -17,6 +17,7 @@ import com.example.adrian.popularmovies_stage2.model.Movie;
 import com.example.adrian.popularmovies_stage2.model.MovieResponse;
 import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
 import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
+import com.facebook.stetho.Stetho;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(
+                                Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(
+                                Stetho.defaultInspectorModulesProvider(this))
+                        .build());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

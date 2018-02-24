@@ -64,7 +64,7 @@ public class DetailsActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         String message = movieTitle + " looks like a great movie.\n";
-        if(trailers.size() > 0){
+        if(trailers != null && trailers.size() > 0){
             message += "Check out this trailer: " + trailers.get(0).getTrailerUrl();
         }
         intent.putExtra(Intent.EXTRA_TEXT, message);

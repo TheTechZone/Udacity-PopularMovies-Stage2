@@ -54,6 +54,9 @@ public class Movie {
     @Expose
     private String releaseDate;
 
+    private String posterUrl;
+    private String backdropUrl;
+
     public Integer getVoteCount() {
         return voteCount;
     }
@@ -106,7 +109,11 @@ public class Movie {
         return posterPath;
     }
 
-    public String getPosterUrl() { return NetworkUtils.buildPosterUrl(posterPath); }
+    public String getPosterUrl() {
+        if(posterUrl != null){
+            return posterUrl;
+        }
+        return NetworkUtils.buildPosterUrl(posterPath); }
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
@@ -141,6 +148,9 @@ public class Movie {
     }
 
     public String getBackdropUrl(){
+        if(backdropUrl != null){
+            return backdropUrl;
+        }
         return NetworkUtils.buildPosterUrl(backdropPath);
     }
 
@@ -170,6 +180,14 @@ public class Movie {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
+    }
+
+    public void setBackdropUrl(String backdropUrl) {
+        this.backdropUrl = backdropUrl;
     }
 
 }

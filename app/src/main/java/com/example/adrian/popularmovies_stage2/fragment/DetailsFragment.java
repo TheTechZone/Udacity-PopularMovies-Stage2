@@ -1,23 +1,25 @@
 package com.example.adrian.popularmovies_stage2.fragment;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.database.Cursor;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adrian.popularmovies_stage2.R;
+import com.example.adrian.popularmovies_stage2.adapter.MoviesAdapter;
 import com.example.adrian.popularmovies_stage2.adapter.ReviewAdapter;
+import com.example.adrian.popularmovies_stage2.data.MoviesContract;
+import com.example.adrian.popularmovies_stage2.data.MoviesProvider;
+import com.example.adrian.popularmovies_stage2.model.Movie;
 import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +48,14 @@ public class DetailsFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected ReviewAdapter mAdapter;
 
+    public String title;
+    public String posterUrl;
+    public String coverUrl;
+    public String synopsis;
+    public float rating;
+    public boolean adult;
+    public String releaseDate;
+
     public void findViews(View view){
         backdropImageView = view.findViewById(R.id.iv_backdrop);
         posterImageView = view.findViewById(R.id.iv_poster);
@@ -61,13 +71,13 @@ public class DetailsFragment extends Fragment {
     public void parseIntent(){
         Intent intent = getActivity().getIntent();
 
-        String title = intent.getStringExtra("title");
-        String posterUrl = intent.getStringExtra("poster");
-        String coverUrl = intent.getStringExtra("cover");
-        String synopsis = intent.getStringExtra("synopsis");
-        Boolean adult = intent.getBooleanExtra("adult", false);
-        Float rating = intent.getFloatExtra("rating",0);
-        String releaseDate = intent.getStringExtra("releaseDate");
+        title = intent.getStringExtra("title");
+        posterUrl = intent.getStringExtra("poster");
+        coverUrl = intent.getStringExtra("cover");
+        synopsis = intent.getStringExtra("synopsis");
+        adult = intent.getBooleanExtra("adult", false);
+        rating = intent.getFloatExtra("rating",0);
+        releaseDate = intent.getStringExtra("releaseDate");
 
         populateUI(title,posterUrl,coverUrl,synopsis,adult,rating,releaseDate);
     }
@@ -78,6 +88,9 @@ public class DetailsFragment extends Fragment {
         movieTitleTextView.setText(title);
         releaseDateTextView.setText("Released: " + getFormattedData(releaseDate));
         descriptionTextView.setText(synopsis);
+        if(isMovieInDatabase()){
+            bookmarkImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmarked));
+        }
         if(adult){
             familyTextView.setText("Adult movie");
         }else {
@@ -106,8 +119,51 @@ public class DetailsFragment extends Fragment {
         bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Bookmarked", Snackbar.LENGTH_SHORT).show();
+//                Snackbar.make(view, "Bookmarked", Snackbar.LENGTH_SHORT).show();
+                if(!isMovieInDatabase()) {
+                    // Add to db
+                    addMovieToDB();
+                    bookmarkImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmarked));
+                    Snackbar.make(view, "Added to favourites!", Snackbar.LENGTH_SHORT).show();
+                }else {
+                    // Remove from db
+                    removeFromDB();
+                    bookmarkImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark));
+                    Snackbar.make(view, "Removed from favourites :(", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    protected boolean isMovieInDatabase() {
+        Cursor c = getActivity().getContentResolver().query(MoviesContract.MovieEntry.CONTENT_URI,
+                new String[]{MoviesContract.MovieEntry.COLUMN_MOVIEDB_ID},
+                MoviesContract.MovieEntry.COLUMN_MOVIEDB_ID +" = " +movieId,
+                null,null,null);
+        if (c != null) {
+            c.close();
+        }
+        int a = 0;
+        if (c != null) {
+             a = c.getCount();
+        }
+        return (a > 0);
+    }
+
+    protected void addMovieToDB(){
+        ContentValues movie = new ContentValues(1);
+        movie.put(MoviesContract.MovieEntry.COLUMN_TITLE, title);
+        movie.put(MoviesContract.MovieEntry.COLUMN_DESCRIPTION, synopsis);
+        movie.put(MoviesContract.MovieEntry.COLUMN_POSTER_URL, posterUrl);
+        movie.put(MoviesContract.MovieEntry.COLUMN_BACKDROP_URL, coverUrl);
+        movie.put(MoviesContract.MovieEntry.COLUMN_MOVIEDB_ID, movieId);
+        movie.put(MoviesContract.MovieEntry.COLUMN_RATING, rating);
+        movie.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, releaseDate);
+        getActivity().getContentResolver().insert(MoviesContract.MovieEntry.CONTENT_URI, movie);
+    }
+
+    protected void removeFromDB(){
+        getActivity().getContentResolver().delete(MoviesContract.MovieEntry.CONTENT_URI,
+                MoviesContract.MovieEntry.COLUMN_MOVIEDB_ID +" = " +movieId,null);
     }
 }

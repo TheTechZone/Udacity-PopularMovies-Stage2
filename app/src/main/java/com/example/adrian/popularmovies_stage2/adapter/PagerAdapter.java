@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.adrian.popularmovies_stage2.fragment.PopularMoviesFragment;
-import com.example.adrian.popularmovies_stage2.fragment.TabFragment1;
+import com.example.adrian.popularmovies_stage2.fragment.FavouriteMoviesFragment;
 import com.example.adrian.popularmovies_stage2.fragment.TopRatedMoviesFragment;
 
 /**
@@ -30,7 +30,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 TopRatedMoviesFragment tab2 = new TopRatedMoviesFragment();
                 return tab2;
             case 2:
-                TabFragment1 tab3 = new TabFragment1();
+                FavouriteMoviesFragment tab3 = new FavouriteMoviesFragment();
                 return tab3;
             default:
                 return null;

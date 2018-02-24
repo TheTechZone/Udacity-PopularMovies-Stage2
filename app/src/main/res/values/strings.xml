@@ -9,6 +9,7 @@
     <string name="movie_name">Beauty and the Beast</string>
     <string name="bookmark_icon">Bookmark Icon</string>
     <string name="button_rent">Rent from $12</string>
+    <string name="content_authority">com.example.adrian.popularmovies_stage2.app</string>
     <string name="button_buy">Watch Trailers</string>
     <string name="tv_rating">Rating</string>
     <string name="label_family">Family</string>

@@ -29,12 +29,22 @@ public class TrailersDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         Bundle arguments = getArguments();
-
+        String[] titleArray = null, urlArray = null;
         ArrayList<String> titles = arguments.getStringArrayList("titles");
         ArrayList<String> urls = arguments.getStringArrayList("urls");
 
-        String[] titleArray  = titles.toArray(new String[urls.size()]);
-        final String[] urlArray = urls.toArray(new String[urls.size()]);
+//        if(titles != null) {
+//            titleArray = titles.toArray(new String[titles.size()]);
+        if (titles != null) {
+            titleArray = (String[]) titles.toArray();
+        }
+//        }
+//        if(urls != null) {
+//            urlArray = urls.toArray(new String[urls.size()]);
+        if (urls != null) {
+            urlArray = (String[]) urls.toArray();
+        }
+//        }
         // 1. Instantiate an AlertDialog.Builder with its constructor
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -45,13 +55,14 @@ public class TrailersDialogFragment extends DialogFragment {
                         // User cancelled the dialog
                     }
                 });
-        if(titleArray.length > 0) {
+        if(titleArray!=null && titleArray.length > 0) {
+            final String[] finalUrlArray = urlArray;
             builder.setItems(titleArray, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 //                        Log.d("DIalog", "tYPED " + i);
                     //Toast.makeText(getContext(), "Id: " + i, Toast.LENGTH_LONG).show();
-                    watchTrailer(getContext(), urlArray[i]);
+                    watchTrailer(getContext(), finalUrlArray[i]);
                 }
             });
         }else {
