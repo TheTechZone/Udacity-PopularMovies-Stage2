@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,9 @@ import android.widget.Toast;
 import com.example.adrian.popularmovies_stage2.BuildConfig;
 import com.example.adrian.popularmovies_stage2.R;
 import com.example.adrian.popularmovies_stage2.activity.DetailsActivity;
+import com.example.adrian.popularmovies_stage2.adapter.ReviewAdapter;
+import com.example.adrian.popularmovies_stage2.model.Review;
+import com.example.adrian.popularmovies_stage2.model.ReviewResponse;
 import com.example.adrian.popularmovies_stage2.model.Trailer;
 import com.example.adrian.popularmovies_stage2.model.TrailerResponse;
 import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
@@ -46,9 +51,6 @@ public class MovieDetailsFragment extends DetailsFragment {
     protected ArrayList<String> trailerTitles;
     protected ArrayList<String> trailerUrls;
 
-    public MovieDetailsFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,8 +62,14 @@ public class MovieDetailsFragment extends DetailsFragment {
         setBookmarkButton();
         setTrailerDialogButtonListener();
 
+        mRecyclerView = view.findViewById(R.id.rv_reviews);
+        mAdapter = new ReviewAdapter(getContext(), new ArrayList<Review>(0));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mAdapter);
         parseIntent();
         loadTrailers(movieId);
+        loadReviews(movieId);
         return view;
     }
 
@@ -100,6 +108,8 @@ public class MovieDetailsFragment extends DetailsFragment {
                             trailerUrls.add(trailer.getTrailerUrl());
                         }
                     }
+                    // Send the trailer list to the parent activity
+                    ((DetailsActivity) getActivity()).setTrailers(trailers);
                 }else {
                     // handle error
                 }
@@ -107,7 +117,32 @@ public class MovieDetailsFragment extends DetailsFragment {
 
             @Override
             public void onFailure(Call<TrailerResponse> call, Throwable t) {
-                Log.d("MainActivity", "error loading from API");
+                Log.d("DetailsFragment", "error loading from API");
+            }
+        });
+    }
+
+    public void loadReviews(int movieId){
+        String api = BuildConfig.THE_MOVIE_DB_API_TOKEN;
+        mService.getMovieReviews(movieId, api).enqueue(new Callback<ReviewResponse>() {
+            @Override
+            public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+                if(response.isSuccessful()){
+                    List<Review> reviews = response.body().getResults();
+//                    if (reviews.size() > 0){
+//                        for(Review rv : reviews){
+//                            descriptionTextView.append("\n" + rv.getContent());
+//                        }
+//                    }
+                    mAdapter.updateReviews(response.body().getResults());
+                }else {
+                    // handle error
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewResponse> call, Throwable t) {
+                Log.d("DetailsFragment", "error loading from API");
             }
         });
     }

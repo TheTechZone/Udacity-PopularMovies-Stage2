@@ -51,10 +51,6 @@ public abstract class MovieFragment extends Fragment {
                         .putExtra("releaseDate", movie.getReleaseDate());
                 startActivity(intent);
             }
-//            @Override
-//            public void onMovieClick(long id) {
-//                Toast.makeText(container.getContext(), "Movie id is: " + id, Toast.LENGTH_LONG).show();
-//            }
         });
 
         //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(container.getContext());

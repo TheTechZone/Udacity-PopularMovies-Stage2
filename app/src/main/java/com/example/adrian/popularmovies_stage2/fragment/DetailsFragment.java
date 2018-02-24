@@ -1,19 +1,23 @@
 package com.example.adrian.popularmovies_stage2.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.adrian.popularmovies_stage2.R;
+import com.example.adrian.popularmovies_stage2.adapter.ReviewAdapter;
 import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +43,8 @@ public class DetailsFragment extends Fragment {
     public ImageButton bookmarkImageButton;
     public Button trailerDialogButton;
     protected MovieApiService mService;
+    protected RecyclerView mRecyclerView;
+    protected ReviewAdapter mAdapter;
 
     public void findViews(View view){
         backdropImageView = view.findViewById(R.id.iv_backdrop);
