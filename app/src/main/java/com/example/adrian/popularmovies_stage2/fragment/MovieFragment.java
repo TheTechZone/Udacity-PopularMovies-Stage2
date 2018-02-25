@@ -21,6 +21,7 @@ import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
 import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,10 @@ public abstract class MovieFragment extends Fragment {
     protected ArrayList<Movie> movieList;
     protected boolean invalidateCache = false;
 
+    private static final String RECYCLERVIEW_STATE = "recyclerview-state";
+    private static final String MOVIE_LIST_STATE = "movielist-state";
     Bundle instance;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         mService = ApiUtils.getMovieService();
@@ -46,7 +50,6 @@ public abstract class MovieFragment extends Fragment {
         mAdapter = new MoviesAdapter(container.getContext(), new ArrayList<Movie>(0), new MoviesAdapter.MovieItemListener() {
             @Override
             public void onMovieClick(Movie movie) {
-//                Toast.makeText(container.getContext(), movie.getPopularity() + " /", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), DetailsActivity.class)
                         .putExtra("id", movie.getId())
                         .putExtra("title", movie.getTitle())
@@ -64,18 +67,14 @@ public abstract class MovieFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
-        if(savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             instance = savedInstanceState;
             movieList = savedInstanceState.getParcelableArrayList("movieList");
         }
-        if (invalidateCache){
-            Toast.makeText(getContext(), "Cache invalidated", Toast.LENGTH_SHORT).show();
-        }
-        if(movieList != null && !invalidateCache) {
+        if (movieList != null && !invalidateCache) {
             mAdapter.updateMovies(movieList);
             Toast.makeText(getContext(), "Updated from bundle", Toast.LENGTH_LONG).show();
-        }else {
+        } else {
             invalidateCache = false;
             loadMovies();
             Toast.makeText(getContext(), "Updated by asynctask", Toast.LENGTH_SHORT).show();
@@ -101,16 +100,13 @@ public abstract class MovieFragment extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
         Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
         savedInstanceState.putParcelable(RECYCLERVIEW_STATE, listState);
-        savedInstanceState.putParcelableArrayList("movieList", movieList);
+        savedInstanceState.putParcelableArrayList(MOVIE_LIST_STATE, movieList);
     }
-
-    private static final String RECYCLERVIEW_STATE = "recyclerview-state";
-
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(RECYCLERVIEW_STATE);
             if (savedRecyclerLayoutState != null) {
                 mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);

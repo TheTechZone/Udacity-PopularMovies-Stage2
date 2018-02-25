@@ -2,7 +2,6 @@ package com.example.adrian.popularmovies_stage2.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.adrian.popularmovies_stage2.data.MoviesContract;
@@ -21,7 +20,7 @@ public class FavouriteMoviesFragment extends MovieFragment {
     public List<Movie> movieList;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
@@ -33,9 +32,9 @@ public class FavouriteMoviesFragment extends MovieFragment {
     }
 
     @Subscribe
-    public void onEvent(UpdateAdapterEvent event){
-        Log.wtf("EVENTBUS", "EVENT FIRED! " + event.isShouldUpdate());
-        if (event.isShouldUpdate()){
+    public void onEvent(UpdateAdapterEvent event) {
+        Log.d("EVENTBUS", "EVENT FIRED! " + event.isShouldUpdate());
+        if (event.isShouldUpdate()) {
             // reload the data inside the fragment
             movieList = null;
             invalidateCache = true;
@@ -46,9 +45,10 @@ public class FavouriteMoviesFragment extends MovieFragment {
     @Override
     public void loadMovies() {
         Cursor mCursor = getActivity().getContentResolver().query(MoviesContract.MovieEntry.CONTENT_URI,
-                null,null,null,null);
-        try{
-            if(mCursor != null) {
+                null, null, null,
+                MoviesContract.MovieEntry._ID + " DESC");
+        try {
+            if (mCursor != null) {
                 movieList = new ArrayList<>();
                 // Getting the value for each column in order to reduce the necessary calls
                 int titleColumn = mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_TITLE);
@@ -74,7 +74,7 @@ public class FavouriteMoviesFragment extends MovieFragment {
                 setMovieList((ArrayList<Movie>) movieList);
                 onRestoreInstanceState(instance);
             }
-        }finally {
+        } finally {
             mCursor.close();
         }
     }

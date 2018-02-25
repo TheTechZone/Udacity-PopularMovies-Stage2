@@ -116,7 +116,6 @@ public class DetailsFragment extends Fragment {
         bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Bookmarked", Snackbar.LENGTH_SHORT).show();
                 if(!isMovieInDatabase()) {
                     // Add to db
                     addMovieToDB();
@@ -128,10 +127,6 @@ public class DetailsFragment extends Fragment {
                     bookmarkImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark));
                     Snackbar.make(view, "Removed from favourites :(", Snackbar.LENGTH_SHORT).show();
                 }
-                if(getParentFragment() instanceof FavouriteMoviesFragment){
-                    Toast.makeText(getContext(), "!!!!!", Toast.LENGTH_SHORT).show();
-                }
-
                 UpdateAdapterEvent event = new UpdateAdapterEvent();
                 event.setShouldUpdate(true);
                 org.greenrobot.eventbus.EventBus.getDefault().post(event);
