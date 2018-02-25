@@ -1,29 +1,14 @@
 package com.example.adrian.popularmovies_stage2.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.adrian.popularmovies_stage2.R;
-import com.example.adrian.popularmovies_stage2.adapter.MoviesAdapter;
 import com.example.adrian.popularmovies_stage2.adapter.PagerAdapter;
-import com.example.adrian.popularmovies_stage2.model.Movie;
-import com.example.adrian.popularmovies_stage2.model.MovieResponse;
-import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
-import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
 import com.facebook.stetho.Stetho;
-
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 

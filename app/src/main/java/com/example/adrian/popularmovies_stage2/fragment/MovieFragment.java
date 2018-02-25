@@ -2,10 +2,12 @@ package com.example.adrian.popularmovies_stage2.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,10 @@ import com.example.adrian.popularmovies_stage2.model.Movie;
 import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
 import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by adrian on 18.02.2018.
@@ -28,8 +33,10 @@ public abstract class MovieFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected MoviesAdapter mAdapter;
     protected MovieApiService mService;
+    protected ArrayList<Movie> movieList;
+    protected boolean invalidateCache = false;
 
-    @Nullable
+    Bundle instance;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         mService = ApiUtils.getMovieService();
@@ -53,20 +60,61 @@ public abstract class MovieFragment extends Fragment {
             }
         });
 
-        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(container.getContext());
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(container.getContext(), 2);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
-
-        loadMovies();
-
+        if(savedInstanceState != null)
+        {
+            instance = savedInstanceState;
+            movieList = savedInstanceState.getParcelableArrayList("movieList");
+        }
+        if (invalidateCache){
+            Toast.makeText(getContext(), "Cache invalidated", Toast.LENGTH_SHORT).show();
+        }
+        if(movieList != null && !invalidateCache) {
+            mAdapter.updateMovies(movieList);
+            Toast.makeText(getContext(), "Updated from bundle", Toast.LENGTH_LONG).show();
+        }else {
+            invalidateCache = false;
+            loadMovies();
+            Toast.makeText(getContext(), "Updated by asynctask", Toast.LENGTH_SHORT).show();
+        }
         return myFragmentView;
     }
 
     public abstract void loadMovies();
 
+    public void setMovieList(ArrayList<Movie> movieList) {
+        this.movieList = movieList;
+    }
+
     public void showErrorMessage() {
         Toast.makeText(getContext(), "Error loading posts", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        super.onSaveInstanceState(savedInstanceState);
+        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        savedInstanceState.putParcelable(RECYCLERVIEW_STATE, listState);
+        savedInstanceState.putParcelableArrayList("movieList", movieList);
+    }
+
+    private static final String RECYCLERVIEW_STATE = "recyclerview-state";
+
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState != null) {
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(RECYCLERVIEW_STATE);
+            if (savedRecyclerLayoutState != null) {
+                mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+            }
+        }
     }
 }

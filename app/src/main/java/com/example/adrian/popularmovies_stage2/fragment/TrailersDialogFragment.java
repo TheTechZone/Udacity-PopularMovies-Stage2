@@ -29,20 +29,21 @@ public class TrailersDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         Bundle arguments = getArguments();
-        String[] titleArray = null, urlArray = null;
+        String[] titleArray = new String[0];
+        String[] urlArray = new String[0];
         ArrayList<String> titles = arguments.getStringArrayList("titles");
         ArrayList<String> urls = arguments.getStringArrayList("urls");
 
 //        if(titles != null) {
 //            titleArray = titles.toArray(new String[titles.size()]);
         if (titles != null) {
-            titleArray = (String[]) titles.toArray();
+            titleArray = titles.toArray(new String[titles.size()]);
         }
 //        }
 //        if(urls != null) {
 //            urlArray = urls.toArray(new String[urls.size()]);
         if (urls != null) {
-            urlArray = (String[]) urls.toArray();
+            urlArray = urls.toArray(new String[titles.size()]);
         }
 //        }
         // 1. Instantiate an AlertDialog.Builder with its constructor

@@ -1,15 +1,16 @@
 package com.example.adrian.popularmovies_stage2.fragment;
 
 import android.database.Cursor;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
-import com.example.adrian.popularmovies_stage2.R;
 import com.example.adrian.popularmovies_stage2.data.MoviesContract;
+import com.example.adrian.popularmovies_stage2.event.UpdateAdapterEvent;
 import com.example.adrian.popularmovies_stage2.model.Movie;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,30 @@ import java.util.List;
 
 public class FavouriteMoviesFragment extends MovieFragment {
 
-    public List<Movie> movieList = new ArrayList<>();
+    public List<Movie> movieList;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(UpdateAdapterEvent event){
+        Log.wtf("EVENTBUS", "EVENT FIRED! " + event.isShouldUpdate());
+        if (event.isShouldUpdate()){
+            // reload the data inside the fragment
+            movieList = null;
+            invalidateCache = true;
+            loadMovies();
+        }
+    }
 
     @Override
     public void loadMovies() {
@@ -25,19 +49,30 @@ public class FavouriteMoviesFragment extends MovieFragment {
                 null,null,null,null);
         try{
             if(mCursor != null) {
+                movieList = new ArrayList<>();
+                // Getting the value for each column in order to reduce the necessary calls
+                int titleColumn = mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_TITLE);
+                int descriptionColumn = mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_DESCRIPTION);
+                int releaseDateColumn = mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE);
+                int posterColumn = mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_POSTER_URL);
+                int backdropColumn = mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_BACKDROP_URL);
+                int movieDbColumn = mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_MOVIEDB_ID);
+                int ratingColumn = mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_RATING);
                 while (mCursor.moveToNext()) {
                     Movie tempMovie = new Movie();
-                    tempMovie.setTitle(mCursor.getString(mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_TITLE)));
-                    tempMovie.setOverview(mCursor.getString(mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_DESCRIPTION)));
-                    tempMovie.setReleaseDate(mCursor.getString(mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE)));
-                    tempMovie.setPosterUrl(mCursor.getString(mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_POSTER_URL)));
-                    tempMovie.setBackdropUrl(mCursor.getString(mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_BACKDROP_URL)));
-                    tempMovie.setId(Integer.valueOf(mCursor.getString(mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_MOVIEDB_ID))));
-                    tempMovie.setVoteAverage(mCursor.getFloat(mCursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_RATING)));
+                    tempMovie.setTitle(mCursor.getString(titleColumn));
+                    tempMovie.setOverview(mCursor.getString(descriptionColumn));
+                    tempMovie.setReleaseDate(mCursor.getString(releaseDateColumn));
+                    tempMovie.setPosterUrl(mCursor.getString(posterColumn));
+                    tempMovie.setBackdropUrl(mCursor.getString(backdropColumn));
+                    tempMovie.setId(Integer.valueOf(mCursor.getString(movieDbColumn)));
+                    tempMovie.setVoteAverage(mCursor.getFloat(ratingColumn));
                     tempMovie.setAdult(false);
                     movieList.add(tempMovie);
                 }
                 mAdapter.updateMovies(movieList);
+                setMovieList((ArrayList<Movie>) movieList);
+                onRestoreInstanceState(instance);
             }
         }finally {
             mCursor.close();

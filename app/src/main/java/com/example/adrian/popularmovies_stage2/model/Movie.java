@@ -1,5 +1,8 @@
 package com.example.adrian.popularmovies_stage2.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,7 +12,7 @@ import com.example.adrian.popularmovies_stage2.rest.NetworkUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+public class Movie implements Parcelable {
 
     @SerializedName("vote_count")
     @Expose
@@ -189,5 +192,49 @@ public class Movie {
     public void setBackdropUrl(String backdropUrl) {
         this.backdropUrl = backdropUrl;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(getPosterUrl());
+        parcel.writeString(getBackdropUrl());
+        parcel.writeString(overview);
+        parcel.writeFloat(voteAverage);
+        parcel.writeString(String.valueOf(adult));
+        parcel.writeString(releaseDate);
+    }
+
+    public Movie(Parcel in){
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.posterPath = in.readString();
+        this.backdropPath = in.readString();
+        this.overview = in.readString();
+        this.voteAverage = in.readFloat();
+        this.adult = Boolean.valueOf(in.readString());
+        this.releaseDate = in.readString();
+    }
+
+    public Movie(){
+        
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
 }

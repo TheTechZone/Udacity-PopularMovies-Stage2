@@ -1,6 +1,5 @@
 package com.example.adrian.popularmovies_stage2.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,11 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adrian.popularmovies_stage2.R;
-import com.example.adrian.popularmovies_stage2.adapter.MoviesAdapter;
 import com.example.adrian.popularmovies_stage2.adapter.ReviewAdapter;
 import com.example.adrian.popularmovies_stage2.data.MoviesContract;
-import com.example.adrian.popularmovies_stage2.data.MoviesProvider;
-import com.example.adrian.popularmovies_stage2.model.Movie;
+import com.example.adrian.popularmovies_stage2.event.UpdateAdapterEvent;
 import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
 import com.squareup.picasso.Picasso;
 
@@ -131,6 +128,13 @@ public class DetailsFragment extends Fragment {
                     bookmarkImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark));
                     Snackbar.make(view, "Removed from favourites :(", Snackbar.LENGTH_SHORT).show();
                 }
+                if(getParentFragment() instanceof FavouriteMoviesFragment){
+                    Toast.makeText(getContext(), "!!!!!", Toast.LENGTH_SHORT).show();
+                }
+
+                UpdateAdapterEvent event = new UpdateAdapterEvent();
+                event.setShouldUpdate(true);
+                org.greenrobot.eventbus.EventBus.getDefault().post(event);
             }
         });
     }

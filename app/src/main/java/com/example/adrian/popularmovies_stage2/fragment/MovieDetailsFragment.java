@@ -30,6 +30,9 @@ import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
 import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -82,7 +85,7 @@ public class MovieDetailsFragment extends DetailsFragment {
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("titles", (ArrayList<String>) trailerTitles);
                 bundle.putStringArrayList("urls", (ArrayList<String>) trailerUrls);
-                //bundle.putSerializable("trailers", (Serializable) trailers);
+
                 dialogFragment.setArguments(bundle);
                 dialogFragment.show(getFragmentManager(), "trailers");
             }
