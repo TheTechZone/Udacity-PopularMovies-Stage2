@@ -4,6 +4,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.Call;
+
 import com.example.adrian.popularmovies_stage2.data.model.MovieResponse;
 import com.example.adrian.popularmovies_stage2.data.model.ReviewResponse;
 import com.example.adrian.popularmovies_stage2.data.model.TrailerResponse;

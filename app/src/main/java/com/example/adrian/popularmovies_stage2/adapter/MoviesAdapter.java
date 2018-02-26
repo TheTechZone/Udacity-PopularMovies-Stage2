@@ -17,24 +17,24 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by adrian on 17.02.2018.
- */
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
     private List<Movie> mMovies;
     private Context mContext;
     private MovieItemListener mMovieItemListener;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //public TextView titleTextView;
-        @BindView(R.id.iv_poster) ImageView posterImageView;
-        @BindView(R.id.tv_poster_title) TextView movieTitleTextView;
-        @BindView(R.id.tv_poster_rating) TextView movieRatingTextView;
+        @BindView(R.id.iv_poster)
+        ImageView posterImageView;
+        @BindView(R.id.tv_poster_title)
+        TextView movieTitleTextView;
+        @BindView(R.id.tv_poster_rating)
+        TextView movieRatingTextView;
 
         MovieItemListener movieItemListener;
 
-        public ViewHolder(Context context, View view, MovieItemListener movieItemListener){
+        public ViewHolder(Context context, View view, MovieItemListener movieItemListener) {
             super(view);
             //titleTextView = view.findViewById(android.R.id.text1);
 //            posterImageView = view.findViewById(R.id.iv_poster);
@@ -55,7 +55,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         }
     }
 
-    public MoviesAdapter(Context context, List<Movie> movies, MovieItemListener listener){
+    public MoviesAdapter(Context context, List<Movie> movies, MovieItemListener listener) {
         this.mContext = context;
         this.mMovies = movies;
         this.mMovieItemListener = listener;
@@ -91,12 +91,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         return mMovies.size();
     }
 
-    public void updateMovies(List<Movie> movies){
+    public void updateMovies(List<Movie> movies) {
         mMovies = movies;
         notifyDataSetChanged();
     }
 
-    private Movie getMovie(int adapeterPos){
+    private Movie getMovie(int adapeterPos) {
         return mMovies.get(adapeterPos);
     }
 

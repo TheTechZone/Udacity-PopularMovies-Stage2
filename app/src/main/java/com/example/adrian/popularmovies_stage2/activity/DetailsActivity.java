@@ -22,7 +22,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     List<Trailer> trailers;
     String movieTitle;
-    @BindView(R.id.toolbar_details) Toolbar toolbar;
+    @BindView(R.id.toolbar_details)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +41,19 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_details,menu);
+        inflater.inflate(R.menu.menu_details, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_share:
                 sendTextIntent();
                 return true;
@@ -61,15 +62,15 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void setTrailers(List<Trailer> trailers){
+    public void setTrailers(List<Trailer> trailers) {
         this.trailers = trailers;
     }
 
-    public void sendTextIntent(){
+    public void sendTextIntent() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         String message = String.format(getString(R.string.share_statement), movieTitle);
-        if(trailers != null && trailers.size() > 0){
+        if (trailers != null && trailers.size() > 0) {
             message += String.format(getString(R.string.share_trailer), trailers.get(0).getTrailerUrl());
         }
         intent.putExtra(Intent.EXTRA_TEXT, message);

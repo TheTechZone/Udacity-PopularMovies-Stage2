@@ -8,14 +8,11 @@ import com.example.adrian.popularmovies_stage2.fragment.PopularMoviesFragment;
 import com.example.adrian.popularmovies_stage2.fragment.FavouriteMoviesFragment;
 import com.example.adrian.popularmovies_stage2.fragment.TopRatedMoviesFragment;
 
-/**
- * Created by adrian on 18.02.2018.
- */
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int tabNumber;
 
-    public PagerAdapter(FragmentManager fm, int tabNumber){
+    public PagerAdapter(FragmentManager fm, int tabNumber) {
         super(fm);
         this.tabNumber = tabNumber;
     }

@@ -5,9 +5,6 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * Created by adrian on 24.02.2018.
- */
 
 public class MoviesContract {
 
@@ -15,7 +12,7 @@ public class MoviesContract {
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static final class MovieEntry implements BaseColumns{
+    public static final class MovieEntry implements BaseColumns {
         // table name
         public static final String TABLE_MOVIES = "movies";
         // columns
@@ -36,10 +33,10 @@ public class MoviesContract {
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_MOVIES;
         // create cursor of base type item for single entry
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE +"/" + CONTENT_AUTHORITY + "/" + TABLE_MOVIES;
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_MOVIES;
 
         // for building URIs on insertion
-        public static Uri buildMoviesUri(long id){
+        public static Uri buildMoviesUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }

@@ -3,9 +3,6 @@ package com.example.adrian.popularmovies_stage2.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by adrian on 24.02.2018.
- */
 
 public class Review {
     @SerializedName("id")

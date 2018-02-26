@@ -21,10 +21,10 @@ import com.example.adrian.popularmovies_stage2.data.rest.ApiUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class MovieDetailsFragment extends DetailsFragment {
 

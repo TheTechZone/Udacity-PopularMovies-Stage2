@@ -12,9 +12,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by adrian on 18.02.2018.
- */
 
 public class TopRatedMoviesFragment extends MovieFragment {
 
@@ -23,12 +20,12 @@ public class TopRatedMoviesFragment extends MovieFragment {
         mService.getTopRatedMovies(api).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     mAdapter.updateMovies(response.body().getResults());
                     setMovieList((ArrayList<Movie>) response.body().getResults());
                     Log.d(TAG, "loaded posts from api");
                     onRestoreInstanceState(instance);
-                }else {
+                } else {
                     int statusCode = response.code();
                     // code to handle errors based on status codes
                 }

@@ -3,9 +3,7 @@ package com.example.adrian.popularmovies_stage2.data.model;
 import com.example.adrian.popularmovies_stage2.data.rest.NetworkUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-/**
- * Created by adrian on 22.02.2018.
- */
+
 
 public class Trailer {
 
@@ -66,7 +64,7 @@ public class Trailer {
         this.key = key;
     }
 
-    public String getTrailerUrl(){
+    public String getTrailerUrl() {
         return NetworkUtils.buildTrailerUrl(key);
     }
 

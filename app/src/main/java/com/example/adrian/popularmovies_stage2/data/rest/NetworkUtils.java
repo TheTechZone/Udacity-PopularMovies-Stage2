@@ -2,9 +2,6 @@ package com.example.adrian.popularmovies_stage2.data.rest;
 
 import android.net.Uri;
 
-/**
- * Created by adrian on 17.02.2018.
- */
 
 public class NetworkUtils {
     private static final String SCHEME = "https";
@@ -23,7 +20,7 @@ public class NetworkUtils {
         return builder.build().toString();
     }
 
-    public static String buildPosterUrl(String posterQuery){
+    public static String buildPosterUrl(String posterQuery) {
         // Remove trailing slash
         posterQuery = posterQuery.substring(1);
         Uri.Builder builder = new Uri.Builder();
@@ -36,7 +33,7 @@ public class NetworkUtils {
         return builder.build().toString();
     }
 
-    public static String buildTrailerUrl(String videoKey){
+    public static String buildTrailerUrl(String videoKey) {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme(SCHEME)
                 .authority(BASE_TRAILER_URL)

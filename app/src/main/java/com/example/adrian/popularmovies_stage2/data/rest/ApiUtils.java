@@ -1,8 +1,5 @@
 package com.example.adrian.popularmovies_stage2.data.rest;
 
-/**
- * Created by adrian on 17.02.2018.
- */
 
 public class ApiUtils {
     public static final String BASE_URL = NetworkUtils.buildApiUrl();

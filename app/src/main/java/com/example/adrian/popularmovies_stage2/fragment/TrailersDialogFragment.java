@@ -16,9 +16,6 @@ import com.example.adrian.popularmovies_stage2.data.model.Trailer;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by adrian on 22.02.2018.
- */
 
 public class TrailersDialogFragment extends DialogFragment {
 
@@ -50,7 +47,7 @@ public class TrailersDialogFragment extends DialogFragment {
                         // User cancelled the dialog
                     }
                 });
-        if(titleArray!=null && titleArray.length > 0) {
+        if (titleArray != null && titleArray.length > 0) {
             final String[] finalUrlArray = urlArray;
             builder.setItems(titleArray, new DialogInterface.OnClickListener() {
                 @Override
@@ -58,16 +55,16 @@ public class TrailersDialogFragment extends DialogFragment {
                     watchTrailer(getContext(), finalUrlArray[i]);
                 }
             });
-        }else {
+        } else {
             builder.setMessage("No trailer available :(");
         }
         // 3. Create the AlertDialog object and return it
         return builder.create();
     }
 
-    public static void watchTrailer(Context context, String url){
+    public static void watchTrailer(Context context, String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        Intent chooser = Intent.createChooser(intent , context.getString(R.string.open_with));
+        Intent chooser = Intent.createChooser(intent, context.getString(R.string.open_with));
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             try {
                 context.startActivity(chooser);

@@ -15,28 +15,27 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by adrian on 24.02.2018.
- */
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
     private List<Review> mReviews;
     private Context mContext;
 
-    public class ViewHolder extends  RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_review_author) TextView reviewAuthorTextView;
-        @BindView(R.id.tv_review_body) TextView reviewContentTextView;
+        @BindView(R.id.tv_review_author)
+        TextView reviewAuthorTextView;
+        @BindView(R.id.tv_review_body)
+        TextView reviewContentTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 //            reviewAuthorTextView = itemView.findViewById(R.id.tv_review_author);
 //            reviewContentTextView = itemView.findViewById(R.id.tv_review_body);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
-    public ReviewAdapter(Context context, List<Review> reviews){
+    public ReviewAdapter(Context context, List<Review> reviews) {
         this.mContext = context;
         this.mReviews = reviews;
     }
@@ -63,7 +62,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         return mReviews.size();
     }
 
-    public void updateReviews(List<Review> reviews){
+    public void updateReviews(List<Review> reviews) {
         mReviews = reviews;
         notifyDataSetChanged();
     }

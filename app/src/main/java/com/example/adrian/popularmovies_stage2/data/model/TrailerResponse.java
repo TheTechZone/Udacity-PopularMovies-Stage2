@@ -1,11 +1,9 @@
 package com.example.adrian.popularmovies_stage2.data.model;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-/**
- * Created by adrian on 22.02.2018.
- */
 
 public class TrailerResponse {
     @SerializedName("id")

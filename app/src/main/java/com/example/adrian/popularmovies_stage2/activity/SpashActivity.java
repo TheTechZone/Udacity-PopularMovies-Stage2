@@ -7,10 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.adrian.popularmovies_stage2.R;
 
-/**
- * Created by adrian on 25.02.2018.
- */
-
 public class SpashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

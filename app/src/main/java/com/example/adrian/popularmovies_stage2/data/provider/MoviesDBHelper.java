@@ -5,9 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-/**
- * Created by adrian on 24.02.2018.
- */
 
 public class MoviesDBHelper extends SQLiteOpenHelper {
     private static final String DEBUG_TAG = MoviesDBHelper.class.getSimpleName();
@@ -15,7 +12,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "movies.db";
     private static final int DB_VERSION = 1;
 
-    public MoviesDBHelper(Context context){
+    public MoviesDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

@@ -110,10 +110,11 @@ public class Movie implements Parcelable {
     }
 
     public String getPosterUrl() {
-        if(posterUrl != null){
+        if (posterUrl != null) {
             return posterUrl;
         }
-        return NetworkUtils.buildPosterUrl(posterPath); }
+        return NetworkUtils.buildPosterUrl(posterPath);
+    }
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
@@ -147,8 +148,8 @@ public class Movie implements Parcelable {
         return backdropPath;
     }
 
-    public String getBackdropUrl(){
-        if(backdropUrl != null){
+    public String getBackdropUrl() {
+        if (backdropUrl != null) {
             return backdropUrl;
         }
         return NetworkUtils.buildPosterUrl(backdropPath);
@@ -207,7 +208,7 @@ public class Movie implements Parcelable {
         parcel.writeString(releaseDate);
     }
 
-    public Movie(Parcel in){
+    public Movie(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
         this.posterPath = in.readString();
@@ -218,8 +219,8 @@ public class Movie implements Parcelable {
         this.releaseDate = in.readString();
     }
 
-    public Movie(){
-        
+    public Movie() {
+
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
