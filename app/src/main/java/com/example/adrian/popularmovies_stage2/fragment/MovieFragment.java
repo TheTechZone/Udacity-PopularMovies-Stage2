@@ -69,11 +69,11 @@ public abstract class MovieFragment extends Fragment {
         }
         if (movieList != null) {
             mAdapter.updateMovies(movieList);
-            Toast.makeText(getContext(), "Updated from bundle", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), "Updated from bundle", Toast.LENGTH_LONG).show();
         } else {
             invalidateCache = false;
             loadMovies();
-            Toast.makeText(getContext(), "Updated by asynctask", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "Updated by asynctask", Toast.LENGTH_SHORT).show();
         }
         return myFragmentView;
     }
