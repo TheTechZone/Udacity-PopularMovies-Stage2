@@ -1,4 +1,4 @@
-package com.example.adrian.popularmovies_stage2.data;
+package com.example.adrian.popularmovies_stage2.data.provider;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

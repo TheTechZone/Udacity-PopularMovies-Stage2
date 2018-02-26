@@ -1,4 +1,4 @@
-package com.example.adrian.popularmovies_stage2.model;
+package com.example.adrian.popularmovies_stage2.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

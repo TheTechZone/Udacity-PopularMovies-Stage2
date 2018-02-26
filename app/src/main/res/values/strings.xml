@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PopularMovies-Stage2</string>
+    <string name="app_name">Popular Movies</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="action_settings">Settings</string>
     <string name="header_description">Cover image for movie</string>
@@ -10,7 +10,7 @@
     <string name="bookmark_icon">Bookmark Icon</string>
     <string name="button_rent">Rent from $12</string>
     <string name="content_authority">com.example.adrian.popularmovies_stage2.app</string>
-    <string name="button_buy">Watch Trailers</string>
+    <string name="button_trailers">Watch Trailers</string>
     <string name="tv_rating">Rating</string>
     <string name="label_family">Family</string>
     <string name="label_tomato">71%</string>
@@ -18,4 +18,16 @@
     <string name="movie_desc">The story and characters you know and love come to spectacular life in the live-action adaptation of Disney’s animated classic Beauty and the Beast, a cinematic event celebrating one of the most beloved tales ever told. Experience the fantastic journey of Belle, a bright, beautiful and independent young woman who is taken prisoner by a Beast in his castle. Despite her fears, she befriends the castle’s enchanted staff, and learns to look beyond the Beast’s hideous exterior and realize the kind heart of the true Prince within.</string>
     <string name="action_share">Share</string>
     <string name="movie_poster">Movie Poster</string>
+    <string name="most_popular_tab">Most Popular</string>
+    <string name="top_rated_tab">Top Rated</string>
+    <string name="favorites_tab">Favourites</string>
+    <string name="share_statement">%s looks like a great movie.</string>
+    <string name="share_trailer">Check out this trailer: %s</string>
+    <string name="rating_out_of_ten">%s / 10</string>
+    <string name="date_released">Released: %s</string>
+    <string name="adult_movie">Adult movie</string>
+    <string name="non_adult_movie">Family movie</string>
+    <string name="added_favorites">Added to favourites!</string>
+    <string name="removed_favorites">Removed from favourites :(</string>
+    <string name="open_with">Open With</string>
 </resources>

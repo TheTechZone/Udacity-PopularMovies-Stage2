@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.adrian.popularmovies_stage2.R;
-import com.example.adrian.popularmovies_stage2.model.Review;
+import com.example.adrian.popularmovies_stage2.data.model.Review;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by adrian on 24.02.2018.
@@ -22,13 +25,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     public class ViewHolder extends  RecyclerView.ViewHolder{
 
-        public TextView reviewAuthorTextView;
-        public TextView reviewContentTextView;
+        @BindView(R.id.tv_review_author) TextView reviewAuthorTextView;
+        @BindView(R.id.tv_review_body) TextView reviewContentTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            reviewAuthorTextView = itemView.findViewById(R.id.tv_review_author);
-            reviewContentTextView = itemView.findViewById(R.id.tv_review_body);
+//            reviewAuthorTextView = itemView.findViewById(R.id.tv_review_author);
+//            reviewContentTextView = itemView.findViewById(R.id.tv_review_body);
+            ButterKnife.bind(this,itemView);
         }
     }
 

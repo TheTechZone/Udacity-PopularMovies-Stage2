@@ -3,8 +3,8 @@ package com.example.adrian.popularmovies_stage2.fragment;
 import android.util.Log;
 
 import com.example.adrian.popularmovies_stage2.BuildConfig;
-import com.example.adrian.popularmovies_stage2.model.Movie;
-import com.example.adrian.popularmovies_stage2.model.MovieResponse;
+import com.example.adrian.popularmovies_stage2.data.model.Movie;
+import com.example.adrian.popularmovies_stage2.data.model.MovieResponse;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class TopRatedMoviesFragment extends MovieFragment {
                 if(response.isSuccessful()) {
                     mAdapter.updateMovies(response.body().getResults());
                     setMovieList((ArrayList<Movie>) response.body().getResults());
-                    Log.d("MainActivity", "loaded posts from api");
+                    Log.d(TAG, "loaded posts from api");
                     onRestoreInstanceState(instance);
                 }else {
                     int statusCode = response.code();
@@ -37,7 +37,7 @@ public class TopRatedMoviesFragment extends MovieFragment {
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
                 showErrorMessage();
-                Log.d("MainActivity", "error loading from API");
+                Log.d(TAG, "error loading from API");
             }
         });
     }

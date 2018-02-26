@@ -12,15 +12,16 @@ import com.example.adrian.popularmovies_stage2.BuildConfig;
 import com.example.adrian.popularmovies_stage2.R;
 import com.example.adrian.popularmovies_stage2.activity.DetailsActivity;
 import com.example.adrian.popularmovies_stage2.adapter.ReviewAdapter;
-import com.example.adrian.popularmovies_stage2.model.Review;
-import com.example.adrian.popularmovies_stage2.model.ReviewResponse;
-import com.example.adrian.popularmovies_stage2.model.Trailer;
-import com.example.adrian.popularmovies_stage2.model.TrailerResponse;
-import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
+import com.example.adrian.popularmovies_stage2.data.model.Review;
+import com.example.adrian.popularmovies_stage2.data.model.ReviewResponse;
+import com.example.adrian.popularmovies_stage2.data.model.Trailer;
+import com.example.adrian.popularmovies_stage2.data.model.TrailerResponse;
+import com.example.adrian.popularmovies_stage2.data.rest.ApiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +38,7 @@ public class MovieDetailsFragment extends DetailsFragment {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         mService = ApiUtils.getMovieService();
         movieId = getActivity().getIntent().getIntExtra("id", 0);
+//        ButterKnife.bind(this,view);
         findViews(view);
 
         setBookmarkButton();
@@ -76,13 +78,12 @@ public class MovieDetailsFragment extends DetailsFragment {
             @Override
             public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
                 if (response.isSuccessful()) {
-                    List<Trailer> temptrailers = response.body().getResults();
-                    trailers = temptrailers;
+                    trailers = response.body().getResults();
                     trailerTitles = new ArrayList<String>();
                     trailerUrls = new ArrayList<String>();
-                    if (temptrailers.size() > 0) {
+                    if (trailers.size() > 0) {
                         for (Trailer trailer :
-                                temptrailers) {
+                                trailers) {
                             //descriptionTextView.append(trailer.getTrailerUrl());
                             trailerTitles.add(trailer.getName());
                             trailerUrls.add(trailer.getTrailerUrl());
@@ -97,7 +98,7 @@ public class MovieDetailsFragment extends DetailsFragment {
 
             @Override
             public void onFailure(Call<TrailerResponse> call, Throwable t) {
-                Log.d("DetailsFragment", "error loading from API");
+                Log.d(TAG, "error loading from API");
             }
         });
     }
@@ -117,7 +118,7 @@ public class MovieDetailsFragment extends DetailsFragment {
 
             @Override
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
-                Log.d("DetailsFragment", "error loading from API");
+                Log.d(TAG, "error loading from API");
             }
         });
     }

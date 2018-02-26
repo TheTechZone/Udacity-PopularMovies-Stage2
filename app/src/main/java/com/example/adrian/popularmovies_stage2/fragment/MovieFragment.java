@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +15,11 @@ import android.widget.Toast;
 import com.example.adrian.popularmovies_stage2.R;
 import com.example.adrian.popularmovies_stage2.activity.DetailsActivity;
 import com.example.adrian.popularmovies_stage2.adapter.MoviesAdapter;
-import com.example.adrian.popularmovies_stage2.model.Movie;
-import com.example.adrian.popularmovies_stage2.rest.ApiUtils;
-import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import com.example.adrian.popularmovies_stage2.data.model.Movie;
+import com.example.adrian.popularmovies_stage2.data.rest.ApiUtils;
+import com.example.adrian.popularmovies_stage2.data.rest.MovieApiService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by adrian on 18.02.2018.
@@ -37,6 +32,7 @@ public abstract class MovieFragment extends Fragment {
     protected ArrayList<Movie> movieList;
     protected boolean invalidateCache = false;
 
+    protected final String TAG = "Movie Fragment";
     private static final String RECYCLERVIEW_STATE = "recyclerview-state";
     private static final String MOVIE_LIST_STATE = "movielist-state";
     Bundle instance;
@@ -69,9 +65,9 @@ public abstract class MovieFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         if (savedInstanceState != null) {
             instance = savedInstanceState;
-            movieList = savedInstanceState.getParcelableArrayList("movieList");
+            movieList = savedInstanceState.getParcelableArrayList(MOVIE_LIST_STATE);
         }
-        if (movieList != null && !invalidateCache) {
+        if (movieList != null) {
             mAdapter.updateMovies(movieList);
             Toast.makeText(getContext(), "Updated from bundle", Toast.LENGTH_LONG).show();
         } else {

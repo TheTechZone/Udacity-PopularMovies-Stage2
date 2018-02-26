@@ -12,12 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.SpashActivity" android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainActivity">
         </activity>
         <activity
             android:name=".activity.DetailsActivity"
@@ -30,7 +32,7 @@
         </activity>
         <provider
             android:authorities="com.example.adrian.popularmovies_stage2.app"
-            android:name=".data.MoviesProvider"
+            android:name=".data.provider.MoviesProvider"
             android:exported="false"
             android:syncable="true"/>
     </application>

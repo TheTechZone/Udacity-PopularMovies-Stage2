@@ -9,10 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.adrian.popularmovies_stage2.R;
-import com.example.adrian.popularmovies_stage2.model.Movie;
+import com.example.adrian.popularmovies_stage2.data.model.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by adrian on 17.02.2018.
@@ -25,19 +28,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         //public TextView titleTextView;
-        public ImageView posterImageView;
-        public TextView movieTitleTextView;
-        public TextView movieRatingTextView;
+        @BindView(R.id.iv_poster) ImageView posterImageView;
+        @BindView(R.id.tv_poster_title) TextView movieTitleTextView;
+        @BindView(R.id.tv_poster_rating) TextView movieRatingTextView;
 
         MovieItemListener movieItemListener;
 
         public ViewHolder(Context context, View view, MovieItemListener movieItemListener){
             super(view);
             //titleTextView = view.findViewById(android.R.id.text1);
-            posterImageView = view.findViewById(R.id.iv_poster);
-            movieTitleTextView = view.findViewById(R.id.tv_poster_title);
-            movieRatingTextView = view.findViewById(R.id.tv_poster_rating);
-
+//            posterImageView = view.findViewById(R.id.iv_poster);
+//            movieTitleTextView = view.findViewById(R.id.tv_poster_title);
+//            movieRatingTextView = view.findViewById(R.id.tv_poster_rating);
+            ButterKnife.bind(this, view);
             mContext = context;
             this.movieItemListener = movieItemListener;
             view.setOnClickListener(this);
@@ -74,14 +77,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(MoviesAdapter.ViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
-//        TextView textView = holder.titleTextView;
-//        textView.setText(movie.getPosterUrl());
         ImageView imageView = holder.posterImageView;
         Picasso.with(mContext)
                 .load(movie.getPosterUrl())
                 .into(imageView);
         holder.movieTitleTextView.setText(movie.getTitle());
-        holder.movieRatingTextView.setText(movie.getVoteAverage().toString() + " / 10");
+        holder.movieRatingTextView.setText(String.format(mContext.getString(R.string.rating_out_of_ten), movie.getVoteAverage().toString()));
 
     }
 
@@ -100,7 +101,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     }
 
     public interface MovieItemListener {
-//        void onMovieClick(long id);
         void onMovieClick(Movie movie);
     }
 }

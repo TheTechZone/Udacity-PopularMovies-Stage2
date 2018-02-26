@@ -1,10 +1,6 @@
-package com.example.adrian.popularmovies_stage2.model;
+package com.example.adrian.popularmovies_stage2.data.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.example.adrian.popularmovies_stage2.fragment.TopRatedMoviesFragment;
-import com.example.adrian.popularmovies_stage2.rest.NetworkUtils;
+import com.example.adrian.popularmovies_stage2.data.rest.NetworkUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 /**

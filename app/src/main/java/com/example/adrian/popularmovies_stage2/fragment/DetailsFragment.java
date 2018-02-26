@@ -11,13 +11,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adrian.popularmovies_stage2.R;
 import com.example.adrian.popularmovies_stage2.adapter.ReviewAdapter;
-import com.example.adrian.popularmovies_stage2.data.MoviesContract;
+import com.example.adrian.popularmovies_stage2.data.provider.MoviesContract;
 import com.example.adrian.popularmovies_stage2.event.UpdateAdapterEvent;
-import com.example.adrian.popularmovies_stage2.rest.MovieApiService;
+import com.example.adrian.popularmovies_stage2.data.rest.MovieApiService;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -25,22 +24,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by adrian on 22.02.2018.
  */
 
 public class DetailsFragment extends Fragment {
 
+    protected String TAG = "Details fragment";
     public int movieId;
-    public ImageView backdropImageView;
-    public ImageView posterImageView;
-    public TextView movieTitleTextView;
-    public TextView releaseDateTextView;
-    public TextView descriptionTextView;
-    public TextView ratingTextView;
-    public TextView familyTextView;
-    public ImageButton bookmarkImageButton;
-    public Button trailerDialogButton;
+
+    @BindView(R.id.iv_backdrop) ImageView backdropImageView;
+    @BindView(R.id.iv_poster) ImageView posterImageView;
+    @BindView(R.id.tv_movie_title) TextView movieTitleTextView;
+    @BindView(R.id.tv_release_date) TextView releaseDateTextView;
+    @BindView(R.id.tv_description) TextView descriptionTextView;
+    @BindView(R.id.tv_rating_percent) TextView ratingTextView;
+    @BindView(R.id.tv_family) TextView familyTextView;
+    @BindView(R.id.btn_bookmark) ImageButton bookmarkImageButton;
+    @BindView(R.id.btn_trailer_dialog) Button trailerDialogButton;
+
     protected MovieApiService mService;
     protected RecyclerView mRecyclerView;
     protected ReviewAdapter mAdapter;
@@ -54,15 +59,16 @@ public class DetailsFragment extends Fragment {
     public String releaseDate;
 
     public void findViews(View view){
-        backdropImageView = view.findViewById(R.id.iv_backdrop);
-        posterImageView = view.findViewById(R.id.iv_poster);
-        movieTitleTextView = view.findViewById(R.id.tv_movie_title);
-        releaseDateTextView = view.findViewById(R.id.tv_release_date);
-        descriptionTextView = view.findViewById(R.id.tv_description);
-        ratingTextView = view.findViewById(R.id.tv_rating_percent);
-        familyTextView = view.findViewById(R.id.tv_family);
-        bookmarkImageButton = view.findViewById(R.id.btn_bookmark);
-        trailerDialogButton = view.findViewById(R.id.btn_trailer_dialog);
+//        backdropImageView = view.findViewById(R.id.iv_backdrop);
+//        posterImageView = view.findViewById(R.id.iv_poster);
+//        movieTitleTextView = view.findViewById(R.id.tv_movie_title);
+//        releaseDateTextView = view.findViewById(R.id.tv_release_date);
+//        descriptionTextView = view.findViewById(R.id.tv_description);
+//        ratingTextView = view.findViewById(R.id.tv_rating_percent);
+//        familyTextView = view.findViewById(R.id.tv_family);
+//        bookmarkImageButton = view.findViewById(R.id.btn_bookmark);
+//        trailerDialogButton = view.findViewById(R.id.btn_trailer_dialog);
+        ButterKnife.bind(this,view);
     }
 
     public void parseIntent(){
@@ -83,15 +89,15 @@ public class DetailsFragment extends Fragment {
         Picasso.with(getContext()).load(coverUrl).into(backdropImageView);
         Picasso.with(getContext()).load(posterUrl).into(posterImageView);
         movieTitleTextView.setText(title);
-        releaseDateTextView.setText("Released: " + getFormattedData(releaseDate));
+        releaseDateTextView.setText(String.format(getString(R.string.date_released), getFormattedData(releaseDate)));
         descriptionTextView.setText(synopsis);
         if(isMovieInDatabase()){
             bookmarkImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmarked));
         }
         if(adult){
-            familyTextView.setText("Adult movie");
+            familyTextView.setText(R.string.adult_movie);
         }else {
-            familyTextView.setText("Family movie");
+            familyTextView.setText(R.string.non_adult_movie);
         }
         ratingTextView.setText(ratingToPercent(rating));
     }
@@ -120,12 +126,12 @@ public class DetailsFragment extends Fragment {
                     // Add to db
                     addMovieToDB();
                     bookmarkImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmarked));
-                    Snackbar.make(view, "Added to favourites!", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, R.string.added_favorites, Snackbar.LENGTH_SHORT).show();
                 }else {
                     // Remove from db
                     removeFromDB();
                     bookmarkImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark));
-                    Snackbar.make(view, "Removed from favourites :(", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, R.string.removed_favorites, Snackbar.LENGTH_SHORT).show();
                 }
                 UpdateAdapterEvent event = new UpdateAdapterEvent();
                 event.setShouldUpdate(true);

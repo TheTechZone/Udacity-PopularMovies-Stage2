@@ -9,10 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.adrian.popularmovies_stage2.model.Trailer;
+import com.example.adrian.popularmovies_stage2.R;
+import com.example.adrian.popularmovies_stage2.data.model.Trailer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +33,13 @@ public class TrailersDialogFragment extends DialogFragment {
         ArrayList<String> titles = arguments.getStringArrayList("titles");
         ArrayList<String> urls = arguments.getStringArrayList("urls");
 
-//        if(titles != null) {
-//            titleArray = titles.toArray(new String[titles.size()]);
         if (titles != null) {
             titleArray = titles.toArray(new String[titles.size()]);
         }
-//        }
-//        if(urls != null) {
-//            urlArray = urls.toArray(new String[urls.size()]);
+
         if (urls != null) {
             urlArray = urls.toArray(new String[titles.size()]);
         }
-//        }
         // 1. Instantiate an AlertDialog.Builder with its constructor
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -61,8 +55,6 @@ public class TrailersDialogFragment extends DialogFragment {
             builder.setItems(titleArray, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-//                        Log.d("DIalog", "tYPED " + i);
-                    //Toast.makeText(getContext(), "Id: " + i, Toast.LENGTH_LONG).show();
                     watchTrailer(getContext(), finalUrlArray[i]);
                 }
             });
@@ -75,7 +67,7 @@ public class TrailersDialogFragment extends DialogFragment {
 
     public static void watchTrailer(Context context, String url){
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        Intent chooser = Intent.createChooser(intent , "Open With");
+        Intent chooser = Intent.createChooser(intent , context.getString(R.string.open_with));
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             try {
                 context.startActivity(chooser);

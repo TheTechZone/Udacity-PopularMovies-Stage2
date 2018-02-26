@@ -4,9 +4,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.adrian.popularmovies_stage2.data.MoviesContract;
+import com.example.adrian.popularmovies_stage2.data.provider.MoviesContract;
 import com.example.adrian.popularmovies_stage2.event.UpdateAdapterEvent;
-import com.example.adrian.popularmovies_stage2.model.Movie;
+import com.example.adrian.popularmovies_stage2.data.model.Movie;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

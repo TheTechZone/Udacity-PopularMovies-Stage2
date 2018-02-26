@@ -1,31 +1,36 @@
 package com.example.adrian.popularmovies_stage2.activity;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.adrian.popularmovies_stage2.R;
-import com.example.adrian.popularmovies_stage2.model.Trailer;
+import com.example.adrian.popularmovies_stage2.data.model.Trailer;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity {
 
 
     List<Trailer> trailers;
     String movieTitle;
+    @BindView(R.id.toolbar_details) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_details);
         setSupportActionBar(toolbar);
 
         movieTitle = getIntent().getStringExtra("title");
@@ -63,9 +68,9 @@ public class DetailsActivity extends AppCompatActivity {
     public void sendTextIntent(){
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
-        String message = movieTitle + " looks like a great movie.\n";
+        String message = String.format(getString(R.string.share_statement), movieTitle);
         if(trailers != null && trailers.size() > 0){
-            message += "Check out this trailer: " + trailers.get(0).getTrailerUrl();
+            message += String.format(getString(R.string.share_trailer), trailers.get(0).getTrailerUrl());
         }
         intent.putExtra(Intent.EXTRA_TEXT, message);
         intent.setType("text/plain");

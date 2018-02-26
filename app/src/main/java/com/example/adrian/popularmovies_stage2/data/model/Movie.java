@@ -1,14 +1,11 @@
-package com.example.adrian.popularmovies_stage2.model;
+package com.example.adrian.popularmovies_stage2.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import com.example.adrian.popularmovies_stage2.rest.NetworkUtils;
+import com.example.adrian.popularmovies_stage2.data.rest.NetworkUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

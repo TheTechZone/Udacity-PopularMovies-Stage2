@@ -1,4 +1,4 @@
-package com.example.adrian.popularmovies_stage2.rest;
+package com.example.adrian.popularmovies_stage2.data.rest;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

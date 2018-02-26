@@ -1,4 +1,4 @@
-package com.example.adrian.popularmovies_stage2.data;
+package com.example.adrian.popularmovies_stage2.data.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
